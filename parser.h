@@ -12,4 +12,4 @@ struct FastqRecord {
 };
 
 // Парсер
-bool parse_fastq(std::ifstream &filestream, int32_t &index, FastqRecord &record);
+bool parse_fastq(std::ifstream &filestream, FastqRecord &record);

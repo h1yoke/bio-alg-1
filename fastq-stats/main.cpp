@@ -19,7 +19,6 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    int32_t line = 0;
     int32_t count = 0;
     int64_t sum = 0;
     int32_t max_len = 0;
@@ -31,7 +30,7 @@ int main(int argc, char *argv[]) {
     auto start_time = std::chrono::steady_clock::now();
     std::cout << std::fixed << std::setprecision(2);
 
-    while (parse_fastq(file, line, record)) {
+    while (parse_fastq(file, record)) {
         int32_t size = record.sequence.size();
 
         min_len = std::min(min_len, size);

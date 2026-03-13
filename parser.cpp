@@ -2,15 +2,12 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <vector>
-#include <algorithm>
 
 #include "parser.h"
 
 // Парсер одной записи (возвращает true если продолжаем чтение в файле)
 bool parse_fastq(
     std::ifstream &fs,
-    int32_t &i,
     FastqRecord &record
 ) {
     std::string s;
@@ -24,14 +21,13 @@ bool parse_fastq(
         return false;
     }
     record.naming = s.substr(1);
-    i++;
 
     // Пробуем прочесть последовательность
     if (!std::getline(fs, s)) {
         std::cout << "Ожидалась строка последовательности\n";
         return false;
     }
-    for (size_t i = 0; i < s.size(); ++i) {
+    for (size_t i = 0; i < s.size(); i++) {
         char c = s[i];
         std::vector<char> allowed_chars = {
             'A', 'C', 'G', 'T', 'U',                              // обычные
@@ -44,7 +40,6 @@ bool parse_fastq(
         }
     }
     record.sequence = s;
-    i++;
  
     // Пробуем прочесть комментарий
     if (!std::getline(fs, s)) {
@@ -56,7 +51,6 @@ bool parse_fastq(
         return false;
     }
     record.comment = s;
-    i++;
 
     // Пробуем прочесть качество
     if (!std::getline(fs, s)) {
@@ -64,7 +58,6 @@ bool parse_fastq(
         return false;
     }
     record.quality = s;
-    i++;
 
     return true; // Прочли 4 правильные строки - продолжаем парсить записи
 }

@@ -15,7 +15,6 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    int32_t line = 0;
     int64_t gc_num = 0;
     int64_t all_num = 0;
 
@@ -25,7 +24,7 @@ int main(int argc, char *argv[]) {
     auto start_time = std::chrono::steady_clock::now();
     std::cout << std::fixed << std::setprecision(2);
 
-    while (parse_fastq(file, line, record)) {
+    while (parse_fastq(file, record)) {
         for (char ch: record.sequence)
             if (ch == 'G' || ch == 'C') gc_num++;
         all_num += record.sequence.size();
